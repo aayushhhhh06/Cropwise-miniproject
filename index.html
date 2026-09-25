@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#145a3d" />
+    <title>CropWise | Smart Farm Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#top" aria-label="CropWise home">
+          <span class="brand-mark">⌁</span>
+          <span>crop<span>wise</span></span>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a class="nav-link active" href="#dashboard"><span>▦</span> Dashboard</a>
+          <a class="nav-link" href="#calculator"><span>⌁</span> Farm calculator</a>
+          <a class="nav-link" href="#soil-report"><span>◈</span> Soil health</a>
+          <a class="nav-link" href="#recommendations"><span>✦</span> Recommendations</a>
+        </nav>
+
+        <div class="farmer-card">
+          <div class="avatar">RS</div>
+          <div>
+            <strong>Ravi Sharma</strong>
+            <small>Greenfield Farm</small>
+          </div>
+          <button class="more-btn" aria-label="Farm profile options">•••</button>
+        </div>
+      </aside>
+
+      <section class="content" id="top">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">15 AUGUST 2026 · PUNE, MAHARASHTRA</p>
+            <h1>Good afternoon, Ravi <span>🌱</span></h1>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn" aria-label="Notifications">♧<i></i></button>
+            <button class="weather-pill" type="button"><span>☀</span><b>28°C</b><small>Mostly sunny</small></button>
+          </div>
+        </header>
+
+        <section class="hero" id="dashboard">
+          <div class="hero-copy">
+            <span class="section-tag">FIELD SUMMARY</span>
+            <h2>Your farm is growing <em>strong.</em></h2>
+            <p>Track field conditions, estimate crop yield and get simple soil-care advice in one place.</p>
+            <a href="#calculator" class="primary-btn">Check your field <span>→</span></a>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="sun"></div>
+            <div class="cloud cloud-one"></div>
+            <div class="cloud cloud-two"></div>
+            <div class="hill hill-back"></div>
+            <div class="hill hill-front"></div>
+            <div class="field-lines"></div>
+            <div class="plant plant-one"><b></b><i></i><i></i></div>
+            <div class="plant plant-two"><b></b><i></i><i></i></div>
+            <div class="plant plant-three"><b></b><i></i><i></i></div>
+          </div>
+        </section>
+
+        <section class="metric-grid" aria-label="Latest field readings">
+          <article class="metric-card">
+            <div class="metric-icon mint">◒</div>
+            <div><p>Temperature</p><strong id="tempMetric">28<span>°C</span></strong></div>
+            <span class="metric-status good">Optimal</span>
+          </article>
+          <article class="metric-card">
+            <div class="metric-icon blue">≈</div>
+            <div><p>Soil moisture</p><strong id="moistureMetric">42<span>%</span></strong></div>
+            <span class="metric-status good">Good</span>
+          </article>
+          <article class="metric-card">
+            <div class="metric-icon amber">◉</div>
+            <div><p>Soil fertility</p><strong id="fertilityMetric">95<span>/100</span></strong></div>
+            <span class="metric-status good" id="fertilityStatus">Healthy</span>
+          </article>
+          <article class="metric-card">
+            <div class="metric-icon coral">⌁</div>
+            <div><p>Expected yield</p><strong id="yieldMetric">4.6<span> t/ac</span></strong></div>
+            <span class="metric-status neutral" id="yieldStatus">This season</span>
+          </article>
+        </section>
+
+        <section class="work-area">
+          <article class="calculator-panel" id="calculator">
+            <div class="panel-heading">
+              <div>
+                <span class="section-tag">MINI PROJECT TOOL</span>
+                <h2>Crop &amp; yield calculator</h2>
+              </div>
+              <span class="ai-badge"><b>✦</b> AI estimate</span>
+            </div>
+            <p class="panel-intro">Enter your latest field test values. Our simple model calculates soil quality, nutrient status and a possible crop yield.</p>
+
+            <form id="farmForm" novalidate>
+              <div class="form-grid">
+                <label>Crop type
+                  <select id="crop" name="crop">
+                    <option value="rice">Rice</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="maize">Maize</option>
+                    <option value="cotton">Cotton</option>
+                    <option value="sugarcane">Sugarcane</option>
+                  </select>
+                </label>
+                <label>Farm area (acres)
+                  <div class="input-wrap"><input id="area" name="area" type="number" min="0.1" step="0.1" value="2.5" required /><span>ac</span></div>
+                </label>
+                <label>Temperature
+                  <div class="input-wrap"><input id="temperature" name="temperature" type="number" min="0" max="60" value="28" required /><span>°C</span></div>
+                </label>
+                <label>Soil moisture
+                  <div class="input-wrap"><input id="moisture" name="moisture" type="number" min="0" max="100" value="42" required /><span>%</span></div>
+                </label>
+                <label>Soil pH
+                  <div class="input-wrap"><input id="ph" name="ph" type="number" min="0" max="14" step="0.1" value="6.7" required /><span>pH</span></div>
+                </label>
+                <label>Organic matter
+                  <div class="input-wrap"><input id="organic" name="organic" type="number" min="0" max="15" step="0.1" value="2.8" required /><span>%</span></div>
+                </label>
+                <label>Nitrogen (N)
+                  <div class="input-wrap"><input id="nitrogen" name="nitrogen" type="number" min="0" max="300" value="185" required /><span>kg/ha</span></div>
+                </label>
+                <label>Phosphorus (P)
+                  <div class="input-wrap"><input id="phosphorus" name="phosphorus" type="number" min="0" max="150" value="42" required /><span>kg/ha</span></div>
+                </label>
+              </div>
+              <p id="formError" class="form-error" role="alert"></p>
+              <button class="calculate-btn" type="submit">Calculate farm report <span>→</span></button>
+            </form>
+          </article>
+
+          <aside class="result-panel" id="soil-report" aria-live="polite">
+            <div class="result-header">
+              <div>
+                <span class="section-tag">LIVE RESULT</span>
+                <h2>Farm health score</h2>
+              </div>
+              <button id="resetButton" class="text-btn" type="button">Reset</button>
+            </div>
+            <div class="score-row">
+              <div class="score-ring"><strong id="scoreValue">91</strong><span>/ 100</span></div>
+              <div><strong id="scoreTitle">Healthy soil</strong><p id="scoreDescription">Your field conditions are well-balanced for rice.</p></div>
+            </div>
+            <div class="divider"></div>
+            <div class="result-list">
+              <div><span class="dot green"></span><p>Fertility level <small id="resultFertility">Good · 95%</small></p></div>
+              <div><span class="dot yellow"></span><p>Nitrogen status <small id="resultNitrogen">Adequate · 185 kg/ha</small></p></div>
+              <div><span class="dot purple"></span><p>Phosphorus status <small id="resultPhosphorus">Adequate · 42 kg/ha</small></p></div>
+            </div>
+            <div class="yield-box">
+              <span>ESTIMATED TOTAL YIELD</span>
+              <strong id="totalYield">11.5 <small>tonnes</small></strong>
+              <p id="yieldDetail">Based on 2.5 acres of rice</p>
+            </div>
+          </aside>
+        </section>
+
+        <section class="lower-grid" id="recommendations">
+          <article class="advice-card">
+            <div class="panel-heading compact-heading"><div><span class="section-tag">NEXT BEST STEP</span><h2>Field recommendation</h2></div><span class="round-icon">↗</span></div>
+            <p id="recommendationText">Apply a light organic compost dose within the next 7 days to keep your soil active and improve water holding.</p>
+            <div class="recommendation-meta"><span class="leaf-dot">⌁</span><span id="recommendationTag">Priority: Keep moisture stable</span></div>
+          </article>
+
+          <article class="nutrient-card">
+            <div class="panel-heading compact-heading"><div><span class="section-tag">SOIL NUTRIENTS</span><h2>NPK at a glance</h2></div><span id="nutrientOverall" class="overall-label">Balanced</span></div>
+            <div class="bar-group"><div><span>Nitrogen</span><b id="nText">185 kg/ha</b></div><div class="track"><i id="nBar" class="n-bar"></i></div></div>
+            <div class="bar-group"><div><span>Phosphorus</span><b id="pText">42 kg/ha</b></div><div class="track"><i id="pBar" class="p-bar"></i></div></div>
+            <p class="legend"><span class="legend-dot nitrogen"></span> Nitrogen <span class="legend-dot phosphorus"></span> Phosphorus</p>
+          </article>
+        </section>
+
+        <footer>CropWise mini project · Built for practical farm decisions <span>•</span> Data is an educational estimate</footer>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
