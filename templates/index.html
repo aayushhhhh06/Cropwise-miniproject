@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#145a3d"><title>Fasal | Crop yield management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<main class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#top" aria-label="Fasal home"><span class="brand-mark">⌁</span><span>fa<span>sal</span></span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="nav-link active" href="#dashboard"><span>▦</span> Dashboard</a>
+      <a class="nav-link" href="#calculator"><span>⌁</span> Farm calculator</a>
+      <a class="nav-link" href="#history"><span>◷</span> Crop history</a>
+      <a class="nav-link" href="#recommendations"><span>✦</span> Recommendations</a>
+    </nav>
+    <div class="farmer-card"><div class="avatar">FM</div><div><strong>Farm manager</strong><small>Fasal workspace</small></div></div>
+  </aside>
+  <section class="content" id="top">
+    <header class="topbar"><div><p class="eyebrow">{{ today }} · YOUR FARM</p><h1>Good afternoon, farmer <span>🌱</span></h1></div><div class="header-actions"><button class="icon-btn" aria-label="Notifications">♧<i></i></button><div class="weather-pill"><span>☀</span><b>Field data</b><small>Ready to analyse</small></div></div></header>
+    <section class="hero" id="dashboard"><div class="hero-copy"><span class="section-tag">FIELD SUMMARY</span><h2>Make every harvest <em>count.</em></h2><p>Record field conditions, estimate crop yield and build a practical history for better farm decisions.</p><a href="#calculator" class="primary-btn">Check your field <span>→</span></a></div><div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div><div class="hill hill-back"></div><div class="hill hill-front"></div><div class="field-lines"></div><div class="plant plant-one"><b></b><i></i><i></i></div><div class="plant plant-two"><b></b><i></i><i></i></div><div class="plant plant-three"><b></b><i></i><i></i></div></div></section>
+    <section class="metric-grid" aria-label="Latest field readings">
+      <article class="metric-card"><div class="metric-icon mint">◒</div><div><p>Saved reports</p><strong>{{ records|length }}<span> records</span></strong></div><span class="metric-status good">History</span></article>
+      <article class="metric-card"><div class="metric-icon blue">≈</div><div><p>Supported crops</p><strong>{{ crops|length }}<span> types</span></strong></div><span class="metric-status good">Ready</span></article>
+      <article class="metric-card"><div class="metric-icon amber">◉</div><div><p>Storage</p><strong>SQLite<span> local</span></strong></div><span class="metric-status good">Private</span></article>
+      <article class="metric-card"><div class="metric-icon coral">⌁</div><div><p>Yield model</p><strong>NumPy<span> engine</span></strong></div><span class="metric-status neutral">Estimate</span></article>
+    </section>
+    {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for category, message in messages %}<p class="flash {{ category }}">{{ message }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+    <section class="work-area">
+      <article class="calculator-panel" id="calculator"><div class="panel-heading"><div><span class="section-tag">FIELD REPORT</span><h2>Crop &amp; yield calculator</h2></div><span class="ai-badge"><b>✦</b> NumPy estimate</span></div><p class="panel-intro">Enter the latest field test values. Fasal calculates a soil quality score and possible yield, then saves the report for future comparison.</p>
+        <form action="{{ url_for('create_record') }}" method="post"><div class="form-grid">
+          <label>Crop type<select name="crop" required>{% for key, crop in crops.items() %}<option value="{{ key }}">{{ crop.name }}</option>{% endfor %}</select></label>
+          {% for field, label, unit, step in [('area','Farm area (acres)','ac','0.1'),('temperature','Temperature','°C','0.1'),('moisture','Soil moisture','%','0.1'),('ph','Soil pH','pH','0.1'),('organic','Organic matter','%','0.1'),('nitrogen','Nitrogen (N)','kg/ha','0.1'),('phosphorus','Phosphorus (P)','kg/ha','0.1')] %}
+          <label>{{ label }}<div class="input-wrap"><input name="{{ field }}" type="number" step="{{ step }}" min="{{ 0.1 if field == 'area' else 0 }}" max="{{ {'area':10000,'temperature':60,'moisture':100,'ph':14,'organic':15,'nitrogen':300,'phosphorus':150}[field] }}" value="{{ {'area':2.5,'temperature':28,'moisture':42,'ph':6.7,'organic':2.8,'nitrogen':185,'phosphorus':42}[field] }}" required><span>{{ unit }}</span></div></label>
+          {% endfor %}</div><button class="calculate-btn" type="submit">Save field report <span>→</span></button></form>
+      </article>
+      <aside class="result-panel" aria-live="polite"><div class="result-header"><div><span class="section-tag">HOW IT WORKS</span><h2>Useful, honest estimates</h2></div></div><div class="score-row"><div class="score-ring"><strong>AI</strong><span>MODEL</span></div><div><strong>Data-led decisions</strong><p>Fasal combines crop targets with your field readings to produce a consistent comparison point.</p></div></div><div class="divider"></div><div class="result-list"><div><span class="dot green"></span><p>Persistent history<small>Every saved report stays in SQLite</small></p></div><div><span class="dot yellow"></span><p>Validated inputs<small>Ranges catch accidental readings</small></p></div><div><span class="dot purple"></span><p>Transparent model<small>Scores are educational estimates</small></p></div></div><div class="yield-box"><span>SUPPORTED CROP PROFILES</span><strong>{{ crops|length }} <small>crop types</small></strong><p>Rice, wheat, maize, cotton and sugarcane</p></div></aside>
+    </section>
+    <section class="lower-grid" id="recommendations"><article class="advice-card"><div class="panel-heading compact-heading"><div><span class="section-tag">NEXT BEST STEP</span><h2>Build a useful baseline</h2></div><span class="round-icon">↗</span></div><p>Save a report after each soil test or major field change. Comparing history helps you spot patterns before the next harvest.</p><div class="recommendation-meta"><span class="leaf-dot">⌁</span><span>Priority: Keep field history current</span></div></article><article class="nutrient-card"><div class="panel-heading compact-heading"><div><span class="section-tag">QUICK GUIDE</span><h2>What to record</h2></div><span class="overall-label">7 readings</span></div><div class="guide-row"><span>01</span><b>Crop &amp; area</b><small>Sets the yield baseline</small></div><div class="guide-row"><span>02</span><b>Soil readings</b><small>Moisture, pH and organic matter</small></div><div class="guide-row"><span>03</span><b>Nutrients</b><small>Nitrogen and phosphorus status</small></div></article></section>
+    <section class="history-section" id="history"><div class="panel-heading"><div><span class="section-tag">RECENT ACTIVITY</span><h2>Crop history</h2></div><span class="history-count">{{ records|length }} saved</span></div>{% if records %}<div class="history-table"><div class="history-head"><span>Crop</span><span>Recorded</span><span>Health</span><span>Estimated yield</span></div>{% for record in records %}<div class="history-row"><strong>{{ record.estimate.crop_name }}</strong><span>{{ record.created_at[:10] }}</span><span><b class="health-pill {{ 'healthy' if record.estimate.score >= 75 else 'watch' }}">{{ record.estimate.score }}/100</b></span><span>{{ record.estimate.total_yield }} tonnes <small>{{ record.estimate.yield_per_acre }} t/ac</small></span></div>{% endfor %}</div>{% else %}<p class="empty-history">No field reports yet. Add your first report above to start tracking your farm.</p>{% endif %}</section>
+    <footer>Fasal crop yield management · Built for practical farm decisions <span>•</span> Estimates are educational, not agronomic advice</footer>
+  </section>
+</main>
+</body>
+</html>
