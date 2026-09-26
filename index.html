@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#145a3d">
+  <meta name="description" content="Fasal helps you estimate crop yield and keep a field report history.">
+  <title>Fasal | Crop yield management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/styles.css">
+  <script src="static/app.js" defer></script>
+</head>
+<body>
+<main class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="#top" aria-label="Fasal home"><span class="brand-mark">⌁</span><span>fa<span>sal</span></span></a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="nav-link active" href="#dashboard"><span>▦</span> Dashboard</a>
+      <a class="nav-link" href="#calculator"><span>⌁</span> Farm calculator</a>
+      <a class="nav-link" href="#history"><span>◷</span> Crop history</a>
+      <a class="nav-link" href="#recommendations"><span>✦</span> Recommendations</a>
+    </nav>
+    <div class="farmer-card"><div class="avatar">FM</div><div><strong>Farm manager</strong><small>Fasal workspace</small></div></div>
+  </aside>
+  <section class="content" id="top">
+    <header class="topbar">
+      <div><p class="eyebrow" id="todayLabel">YOUR FARM · FIELD DASHBOARD</p><h1>Welcome to Fasal <span>🌱</span></h1></div>
+      <div class="header-actions"><div class="weather-pill"><span>☀</span><b>Field data</b><small>Ready to analyse</small></div></div>
+    </header>
+    <section class="hero" id="dashboard">
+      <div class="hero-copy"><span class="section-tag">FIELD SUMMARY</span><h2>Make every harvest <em>count.</em></h2><p>Record field conditions, estimate crop yield and build a practical history for better farm decisions.</p><a href="#calculator" class="primary-btn">Check your field <span>→</span></a></div>
+      <div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div><div class="hill hill-back"></div><div class="hill hill-front"></div><div class="field-lines"></div><div class="plant plant-one"><b></b><i></i><i></i></div><div class="plant plant-two"><b></b><i></i><i></i></div><div class="plant plant-three"><b></b><i></i><i></i></div></div>
+    </section>
+    <div class="storage-notice" role="note"><strong>Browser storage:</strong> Reports are saved on this device and browser. GitHub Pages is static, so records do not sync to your other devices.</div>
+    <section class="metric-grid" aria-label="Farm overview">
+      <article class="metric-card"><div class="metric-icon mint">◒</div><div><p>Saved reports</p><strong id="recordCount">0<span> records</span></strong></div><span class="metric-status good">On this device</span></article>
+      <article class="metric-card"><div class="metric-icon blue">◈</div><div><p>Latest health score</p><strong id="latestScore">—<span>/100</span></strong></div><span class="metric-status neutral" id="latestHealthStatus">No reports</span></article>
+      <article class="metric-card"><div class="metric-icon amber">⌁</div><div><p>Latest estimated yield</p><strong id="latestYield">—<span> tonnes</span></strong></div><span class="metric-status neutral">Latest report</span></article>
+      <article class="metric-card"><div class="metric-icon coral">◉</div><div><p>Supported crops</p><strong>5<span> types</span></strong></div><span class="metric-status good">Ready</span></article>
+    </section>
+    <div id="formMessage" class="flash" role="status" aria-live="polite" hidden></div>
+    <section class="work-area">
+      <article class="calculator-panel" id="calculator">
+        <div class="panel-heading"><div><span class="section-tag">FIELD REPORT</span><h2>Crop &amp; yield calculator</h2></div><span class="ai-badge"><b>✦</b> Field estimate</span></div>
+        <p class="panel-intro">Enter your latest field test values. Fasal estimates soil health and crop yield, then saves the report to this browser for future reference.</p>
+        <form id="farmForm">
+          <div class="form-grid">
+            <label for="crop">Crop type<select id="crop" name="crop" required><option value="rice">Rice</option><option value="wheat">Wheat</option><option value="maize">Maize</option><option value="cotton">Cotton</option><option value="sugarcane">Sugarcane</option></select></label>
+            <label for="area">Farm area (acres)<div class="input-wrap"><input id="area" name="area" type="number" min="0.1" max="10000" step="0.1" value="2.5" required><span>ac</span></div></label>
+            <label for="temperature">Temperature<div class="input-wrap"><input id="temperature" name="temperature" type="number" min="0" max="60" step="0.1" value="28" required><span>°C</span></div></label>
+            <label for="moisture">Soil moisture<div class="input-wrap"><input id="moisture" name="moisture" type="number" min="0" max="100" step="0.1" value="42" required><span>%</span></div></label>
+            <label for="ph">Soil pH<div class="input-wrap"><input id="ph" name="ph" type="number" min="0" max="14" step="0.1" value="6.7" required><span>pH</span></div></label>
+            <label for="organic">Organic matter<div class="input-wrap"><input id="organic" name="organic" type="number" min="0" max="15" step="0.1" value="2.8" required><span>%</span></div></label>
+            <label for="nitrogen">Nitrogen (N)<div class="input-wrap"><input id="nitrogen" name="nitrogen" type="number" min="0" max="300" step="0.1" value="185" required><span>kg/ha</span></div></label>
+            <label for="phosphorus">Phosphorus (P)<div class="input-wrap"><input id="phosphorus" name="phosphorus" type="number" min="0" max="150" step="0.1" value="42" required><span>kg/ha</span></div></label>
+          </div>
+          <button class="calculate-btn" type="submit">Calculate &amp; save report <span>→</span></button>
+        </form>
+      </article>
+      <aside class="result-panel" id="soil-report" aria-live="polite">
+        <div class="result-header"><div><span class="section-tag">FIELD ESTIMATE</span><h2>Farm health score</h2></div></div>
+        <div class="score-row"><div class="score-ring" id="scoreRing"><strong id="scoreValue">—</strong><span>/ 100</span></div><div><strong id="scoreTitle">Ready to calculate</strong><p id="scoreDescription">Enter your field readings to see a crop-specific estimate.</p></div></div>
+        <div class="divider"></div>
+        <div class="result-list">
+          <div><span class="dot green"></span><p>Fertility level<small id="resultFertility">—</small></p></div>
+          <div><span class="dot yellow"></span><p>Nitrogen status<small id="resultNitrogen">—</small></p></div>
+          <div><span class="dot purple"></span><p>Phosphorus status<small id="resultPhosphorus">—</small></p></div>
+        </div>
+        <div class="yield-box"><span>ESTIMATED TOTAL YIELD</span><strong id="totalYield">— <small>tonnes</small></strong><p id="yieldDetail">Estimate updates when you calculate</p></div>
+      </aside>
+    </section>
+    <section class="lower-grid" id="recommendations">
+      <article class="advice-card"><div class="panel-heading compact-heading"><div><span class="section-tag">NEXT BEST STEP</span><h2>Field recommendation</h2></div><span class="round-icon">↗</span></div><p id="recommendationText">Calculate a report to get a field recommendation based on your readings.</p><div class="recommendation-meta"><span class="leaf-dot">⌁</span><span id="recommendationTag">Recommendations are general guidance</span></div></article>
+      <article class="nutrient-card"><div class="panel-heading compact-heading"><div><span class="section-tag">SOIL NUTRIENTS</span><h2>NPK at a glance</h2></div><span id="nutrientOverall" class="overall-label">Awaiting readings</span></div><div class="bar-group"><div><span>Nitrogen</span><b id="nText">—</b></div><div class="track"><i id="nBar" class="n-bar" style="width:0"></i></div></div><div class="bar-group"><div><span>Phosphorus</span><b id="pText">—</b></div><div class="track"><i id="pBar" class="p-bar" style="width:0"></i></div></div><p class="legend"><span class="legend-dot nitrogen"></span> Nitrogen <span class="legend-dot phosphorus"></span> Phosphorus</p></article>
+    </section>
+    <section class="history-section" id="history">
+      <div class="panel-heading"><div><span class="section-tag">RECENT ACTIVITY</span><h2>Crop history</h2></div><div class="history-actions"><span class="history-count" id="historyCount">0 saved</span><button id="exportButton" class="small-action" type="button">Export CSV</button><button id="clearButton" class="small-action danger-action" type="button" disabled>Clear history</button></div></div>
+      <div id="historyList"></div>
+    </section>
+    <footer>Fasal crop yield management <span>•</span> Estimates are educational, not agronomic advice</footer>
+  </section>
+</main>
+</body>
+</html>
