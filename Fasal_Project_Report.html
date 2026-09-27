@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Academic mini-project report for Fasal, a crop-yield management dashboard.">
+  <title>Fasal - Mini Project Report</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18251f;
+      --muted: #52645a;
+      --green: #195b3e;
+      --pale: #eaf2e9;
+      --rule: #cbd6ce;
+    }
+    * { box-sizing: border-box; }
+    html { background: #edf0eb; scroll-behavior: smooth; }
+    body {
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 64px 76px;
+      background: #fff;
+      color: var(--ink);
+      font: 11pt/1.58 Georgia, "Times New Roman", serif;
+      box-shadow: 0 5px 28px #17291b18;
+    }
+    h1, h2, h3, h4 { color: var(--green); line-height: 1.25; }
+    h1 { font-size: 25pt; text-align: center; }
+    h2 { margin-top: 28px; font-size: 17pt; border-bottom: 1px solid var(--rule); padding-bottom: 5px; }
+    h3 { margin: 21px 0 7px; font-size: 13pt; }
+    h4 { margin-bottom: 5px; font-size: 11pt; }
+    p { margin: 8px 0 12px; text-align: justify; }
+    a { color: #155d41; overflow-wrap: anywhere; }
+    table { width: 100%; margin: 14px 0 20px; border-collapse: collapse; font-size: 10pt; }
+    th, td { padding: 8px 9px; border: 1px solid var(--rule); vertical-align: top; text-align: left; }
+    th { color: #174b35; background: var(--pale); }
+    ul, ol { padding-left: 24px; }
+    li { margin: 4px 0; }
+    code { padding: 1px 4px; background: #f0f4f0; font: 9.5pt Consolas, monospace; overflow-wrap: anywhere; }
+    .cover { min-height: 900px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; }
+    .cover .institution { margin-top: 22px; font-size: 16pt; font-weight: 700; letter-spacing: .5px; }
+    .cover .project-label { margin-top: 85px; color: var(--muted); font-size: 15pt; }
+    .cover .project-title { margin: 18px 0; color: var(--green); font-family: Arial, sans-serif; font-size: 34pt; letter-spacing: 2px; }
+    .cover .subtitle { max-width: 530px; font-size: 15pt; }
+    .cover .details { width: 100%; margin-top: 35px; }
+    .cover .details td { width: 50%; padding: 9px; border: 0; text-align: center; }
+    .cover .department { margin-bottom: 18px; font-weight: 700; }
+    .cover .session { margin-bottom: 25px; }
+    .wordmark { display: inline-flex; align-items: center; gap: 9px; color: var(--green); font: 700 21pt Arial, sans-serif; }
+    .wordmark-mark { width: 38px; height: 38px; display: inline-grid; place-items: center; border-radius: 12px 12px 12px 3px; background: #8bcf83; font-size: 25pt; transform: rotate(-10deg); }
+    .page { margin-top: 22px; }
+    .center { text-align: center; }
+    .front-page { min-height: 680px; }
+    .signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 42px; margin-top: 75px; }
+    .signature { padding-top: 10px; border-top: 1px solid var(--ink); text-align: center; }
+    .note { padding: 12px 15px; border-left: 4px solid #65a86b; background: #f1f6f0; color: #3e5947; font-size: 10pt; }
+    .contents li { margin: 7px 0; }
+    .contents > ol > li { break-inside: avoid; }
+    .contents a { color: var(--ink); text-decoration: none; }
+    .chapter-kicker { margin-bottom: -16px; color: #74877a; text-align: center; letter-spacing: 2px; font: 700 10pt Arial, sans-serif; text-transform: uppercase; }
+    .equation { margin: 15px 12px; padding: 12px; border: 1px solid var(--rule); background: #f6f8f5; text-align: center; font: 10pt/1.8 Consolas, monospace; overflow-wrap: anywhere; }
+    figure { margin: 18px 0; }
+    figcaption { margin-top: 7px; color: var(--muted); text-align: center; font-size: 9.5pt; }
+    .architecture { width: 100%; height: auto; border: 1px solid var(--rule); background: #fbfcfa; }
+    .small { color: var(--muted); font-size: 9.5pt; }
+    .references li { margin-bottom: 10px; overflow-wrap: anywhere; }
+    .end-mark { margin-top: 55px; color: var(--green); text-align: center; font-weight: 700; }
+    @media (max-width: 700px) {
+      body { margin: 0; padding: 28px 22px; }
+      .cover { min-height: 760px; }
+      .cover .project-title { font-size: 27pt; }
+      .signature-grid { gap: 20px; }
+      table { font-size: 9pt; }
+      th, td { padding: 6px; }
+    }
+    @page { size: A4; margin: 19mm 19mm 20mm; }
+    @media print {
+      html { background: #fff; }
+      body { max-width: none; margin: 0; padding: 0; box-shadow: none; font-size: 10.5pt; }
+      .page { margin-top: 0; }
+      .cover { min-height: 0; height: 250mm; break-after: page; }
+      .front-page { min-height: 0; break-after: page; }
+      .contents h1 { margin-top: 0; }
+      .contents > ol { columns: 2; column-gap: 28px; font-size: 9.5pt; line-height: 1.3; }
+      .contents li { margin: 3px 0; }
+      .contents > ol > li { margin-bottom: 9px; }
+      .chapter { break-before: page; }
+      h2, h3 { break-after: avoid; }
+      table, figure, .note { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="cover">
+    <div class="institution">[INSTITUTE / UNIVERSITY NAME]</div>
+    <div>
+      <div class="project-label">MINI PROJECT REPORT</div>
+      <div class="project-title">FASAL</div>
+      <div class="subtitle">Crop Yield Management and Field History Dashboard</div>
+      <p class="center">Submitted in partial fulfilment of the requirements for the award of the degree of</p>
+      <p class="center"><strong>Bachelor of Technology</strong><br>[Programme / Department]</p>
+      <table class="details">
+        <tr><td><strong>Submitted by</strong><br>[Student Name]<br>[Roll Number]</td><td><strong>Under the guidance of</strong><br>[Project Guide Name]<br>[Designation]</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="wordmark"><span class="wordmark-mark">⌁</span>fasal</div>
+      <div class="department">DEPARTMENT OF [DEPARTMENT NAME]</div>
+      <div class="session">SESSION: [ACADEMIC SESSION]</div>
+      <p class="small">Public website: <a href="https://aayushhhhh06.github.io/Cropwise-miniproject/">aayushhhhh06.github.io/Cropwise-miniproject</a></p>
+    </div>
+  </header>
+
+  <section class="page front-page" id="certificate">
+    <h1>CERTIFICATE</h1>
+    <p class="center" style="margin-top:70px">This is to certify that the project report entitled <strong>“Fasal: Crop Yield Management and Field History Dashboard”</strong> is a record of the project work carried out by <strong>[Student Name]</strong> (Roll No. <strong>[Roll Number]</strong>) of <strong>[Programme / Department]</strong>, <strong>[Institute Name]</strong>, during <strong>[Academic Session]</strong>, under the guidance of <strong>[Project Guide Name and Designation]</strong>.</p>
+    <p class="center">To the best of our knowledge, this project report fulfils the academic requirements prescribed for the mini project.</p>
+    <div class="signature-grid">
+      <div class="signature">[Project Guide Name]<br>Project Guide</div>
+      <div class="signature">[Project Coordinator Name]<br>Project Coordinator</div>
+      <div class="signature">[Head of Department Name]<br>Head of Department</div>
+      <div class="signature">Date: ____________________<br>Place: ___________________</div>
+    </div>
+    <p class="note" style="margin-top:70px"><strong>Completion note:</strong> Replace the bracketed fields with verified academic details and obtain the required signatures before submitting this report to an institution.</p>
+  </section>
+
+  <section class="page front-page" id="declaration">
+    <h1>DECLARATION</h1>
+    <p style="margin-top:65px">I, <strong>[Student Name]</strong>, declare that the project entitled <strong>“Fasal: Crop Yield Management and Field History Dashboard”</strong> is a description of work undertaken by me as part of the mini project for <strong>[Programme / Department]</strong> at <strong>[Institute Name]</strong>, under the guidance of <strong>[Project Guide Name]</strong>.</p>
+    <p>I further declare that this report has been prepared for academic purposes, that implementation details have been described to the best of my knowledge, and that sources used have been acknowledged in the references. Any estimates produced by the software are educational and are not professional agronomic advice.</p>
+    <div class="signature-grid">
+      <div class="signature">Date: ____________________<br>Place: ___________________</div>
+      <div class="signature">[Student Name]<br>Candidate Signature</div>
+    </div>
+    <h2 style="margin-top:75px">ACKNOWLEDGEMENT</h2>
+    <p>I would like to express my gratitude to <strong>[Project Guide Name]</strong> and the faculty of <strong>[Department / Institute]</strong> for their guidance and academic support. I also thank my classmates, friends, and family for their encouragement during the design, implementation, and review of this project. This acknowledgement is an editable template and should be personalised before formal submission.</p>
+  </section>
+
+  <section class="page front-page" id="abstract">
+    <h1>ABSTRACT</h1>
+    <p>Farm planning relies on observations about crop choice, field size, weather, soil moisture, pH, organic matter, and nutrients. These observations are often kept informally, making it difficult to compare field conditions or maintain a simple record of estimates. Fasal is a responsive crop-yield management dashboard that brings these inputs and a lightweight crop-specific estimation model into one interface.</p>
+    <p>The public application is delivered as a static website through GitHub Pages. A user selects one of five supported crops—rice, wheat, maize, cotton, or sugarcane—and enters field measurements. Browser JavaScript validates the inputs, calculates a weighted soil-health score and estimated yield, displays a general recommendation, and saves submitted reports in the browser’s local storage. Reports can be reviewed, deleted, cleared, or exported as CSV. The layout adapts to desktop, tablet, and smartphone screens.</p>
+    <p>The repository also retains an optional Flask development backend. That implementation uses SQLite for persistent records and NumPy for the same type of crop-profile yield calculation, with HTML templates and JSON endpoints. It is distinct from the Pages deployment: GitHub Pages does not execute Flask or provide a shared database. As a result, reports entered on the public static site remain on that device and browser and do not synchronise across users or devices.</p>
+    <p>The application demonstrates a complete, accessible workflow for educational field reporting, while making the limits of its simplified model and storage explicit. Estimates should not replace laboratory soil testing or advice from a qualified agronomist.</p>
+    <p><strong>Keywords:</strong> crop yield estimation, farm dashboard, soil health, JavaScript, browser storage, GitHub Pages, Flask, SQLite, NumPy.</p>
+  </section>
+
+  <section class="page front-page contents" id="contents">
+    <h1>TABLE OF CONTENTS</h1>
+    <ol>
+      <li><a href="#chapter1">Chapter 1: Introduction</a>
+        <ol><li>Project Background</li><li>Problem Statement</li><li>Proposed Solution</li><li>Objectives</li><li>Scope and Limitations</li><li>Methodology</li><li>Expected Outcomes</li></ol>
+      </li>
+      <li><a href="#chapter2">Chapter 2: Background and Related Work</a>
+        <ol><li>Introduction</li><li>Farm Records and Yield Estimates</li><li>Web Delivery Models</li><li>Limitations and Design Considerations</li><li>Summary</li></ol>
+      </li>
+      <li><a href="#chapter3">Chapter 3: System Design and Architecture</a>
+        <ol><li>Requirements</li><li>Architecture Overview</li><li>Data Model</li><li>Estimation Workflow</li><li>Security and Privacy</li></ol>
+      </li>
+      <li><a href="#chapter4">Chapter 4: Implementation</a>
+        <ol><li>Technology Stack</li><li>Static Front-End</li><li>Yield and Health Calculation</li><li>Browser History and Export</li><li>Optional Flask and SQLite Backend</li><li>GitHub Pages Deployment</li></ol>
+      </li>
+      <li><a href="#chapter5">Chapter 5: Testing and Validation</a>
+        <ol><li>Objectives and Strategy</li><li>Validation Cases</li><li>Deployment Verification</li><li>Known Limitations</li></ol>
+      </li>
+      <li><a href="#chapter6">Chapter 6: Results, Conclusion, and Future Scope</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#appendix">Appendix: Running the Optional Flask Backend</a></li>
+    </ol>
+    <p class="note">This is a digitally generated report. Page numbers may differ depending on the browser, paper size, and print settings used when saving it as PDF.</p>
+  </section>
+
+  <section class="chapter" id="chapter1">
+    <p class="chapter-kicker">Chapter 1</p>
+    <h1>INTRODUCTION</h1>
+    <h2>1.1 Project Background</h2>
+    <p>Digital tools can help farmers organise field observations and compare crop scenarios. However, a practical field log does not need to begin with a complex farm-management platform. A focused interface that records a small set of conditions, explains its estimate, and keeps a usable history can support learning and basic planning. Fasal was developed as a mini project to demonstrate that workflow in a responsive web application.</p>
+    <p>Fasal accepts crop type, farm area, temperature, soil moisture, soil pH, organic matter, nitrogen, and phosphorus. It calculates an indicative health score and yield from crop-specific reference profiles. The public version is a static website accessible through the repository’s GitHub Pages URL on modern phones and computers.</p>
+    <h2>1.2 Problem Statement</h2>
+    <p>Field measurements and yield expectations may be noted in separate places or estimated informally. Without a simple record interface, users may find it difficult to validate readings, compare reports over time, and keep estimates associated with a crop and field area. A solution must also be accessible on common screen sizes without requiring visitors to install an application.</p>
+    <h2>1.3 Proposed Solution</h2>
+    <p>Fasal provides a browser-based dashboard with a structured field form, input-range validation, crop-specific estimate, recommendation text, and a recent-report history. Users can export report history in CSV format. GitHub Pages hosts the static web interface; an optional Flask/SQLite version is retained in the repository for local backend development and demonstrations.</p>
+    <h2>1.4 Objectives</h2>
+    <ol>
+      <li>Provide a simple, responsive interface for entering field and crop observations.</li>
+      <li>Validate numeric inputs against defined ranges before calculating an estimate.</li>
+      <li>Calculate a weighted field-health score and crop-specific yield estimate.</li>
+      <li>Keep a reviewable report history and provide CSV export.</li>
+      <li>Publish the static website through GitHub Pages for access by URL.</li>
+      <li>Document storage, model, and deployment limitations accurately.</li>
+    </ol>
+    <h2>1.5 Scope and Limitations</h2>
+    <p>The static website supports five crops and seven numeric field measurements. It provides an educational score, per-acre estimate, total estimate, and rule-based recommendation. Reports are kept in browser local storage, which is scoped to the browser profile and device. There is no user account, shared cloud database, weather service, sensor integration, or synchronisation.</p>
+    <p>The reference values and weighted formula are illustrative rather than calibrated against local yield datasets. The tool does not account for cultivar, season, irrigation management, pests, disease, seed quality, or local agronomic conditions. Its estimates must not be used as a guarantee of production, financial return, or fertiliser prescription.</p>
+    <h2>1.6 Methodology</h2>
+    <ol>
+      <li><strong>Requirement identification:</strong> define the crop inputs, estimate outputs, browser history, and mobile-friendly page structure.</li>
+      <li><strong>Interface design:</strong> adapt the existing green dashboard design and organise the workflow into form, estimate, recommendations, and history.</li>
+      <li><strong>Model implementation:</strong> encode crop-specific target profiles and a weighted score, with input ranges enforced at the form.</li>
+      <li><strong>Persistence and export:</strong> save reports to local storage and generate a CSV download in the browser.</li>
+      <li><strong>Publishing:</strong> serve the standalone HTML, CSS, and JavaScript from the repository root on GitHub Pages.</li>
+      <li><strong>Validation:</strong> check document/assets, form-to-script element references, browser storage workflow, and the deployed Pages response.</li>
+    </ol>
+    <h2>1.7 Expected Outcomes</h2>
+    <p>The expected outcome is a publicly accessible, responsive application that calculates illustrative crop estimates, retains a local history, and clearly explains that data is not shared between devices. The repository’s optional Flask implementation demonstrates how a server-backed version could be built and tested locally.</p>
+  </section>
+
+  <section class="chapter" id="chapter2">
+    <p class="chapter-kicker">Chapter 2</p>
+    <h1>BACKGROUND AND RELATED WORK</h1>
+    <h2>2.1 Introduction</h2>
+    <p>This chapter frames the project in relation to common approaches to farm record keeping and lightweight web delivery. It is a design-oriented review, not a systematic survey or a claim that Fasal has been validated in field trials.</p>
+    <h2>2.2 Farm Records and Yield Estimates</h2>
+    <p>Field logs can preserve measurements that help users compare conditions across observations. A digital form improves consistency by naming each input, showing units, and applying permitted ranges. Crop models can range from simple rule-based calculations to calibrated statistical and process-based models. Fasal intentionally uses a transparent, weighted heuristic suitable for demonstrating application flow; it is not trained on a yield dataset and should not be interpreted as a production-grade agronomic model.</p>
+    <h2>2.3 Web Delivery Models</h2>
+    <p>A static website consists of files that a web server can deliver without executing application code on the server. This makes it suitable for GitHub Pages and broadly accessible through a normal URL. Browser storage can preserve small amounts of user data locally, but it is not a substitute for authenticated, central persistence. A dynamic Flask application can accept requests and use a SQL database, but it requires a separate server host; GitHub Pages does not run Python processes.</p>
+    <h2>2.4 Design Comparison</h2>
+    <table>
+      <thead><tr><th>Approach</th><th>Strength</th><th>Trade-off</th><th>Fasal use</th></tr></thead>
+      <tbody>
+        <tr><td>Paper or informal records</td><td>Simple and works without devices</td><td>Harder to validate, search, and calculate consistently</td><td>Digital form and browser history provide structured records</td></tr>
+        <tr><td>Static browser application</td><td>Low operational overhead; easy public hosting</td><td>Local data is not shared or synchronised</td><td>Used by the GitHub Pages website</td></tr>
+        <tr><td>Server-backed application</td><td>Can provide shared database and API</td><td>Requires hosting, operations, and access-control design</td><td>Optional Flask/SQLite implementation in the source repository</td></tr>
+        <tr><td>Data-calibrated crop model</td><td>Can reflect validated local observations</td><td>Requires suitable data, calibration, and domain evaluation</td><td>Future extension; current model is a transparent heuristic</td></tr>
+      </tbody>
+    </table>
+    <h2>2.5 Gaps and Design Considerations</h2>
+    <p>For this project, the principal design challenge is to avoid implying capabilities that the deployment does not provide. The published website therefore identifies browser-local storage and describes calculations as estimates. A shared, multi-device history would require a hosted backend, database, authentication, data protection, and operational ownership; those components are outside the deployed Pages application.</p>
+    <h2>2.6 Summary</h2>
+    <p>Fasal combines a lightweight web interface with structured inputs and an explainable calculation. The choice of static deployment makes the website easy to publish, while local-only persistence and the non-calibrated model remain explicit limitations.</p>
+  </section>
+
+  <section class="chapter" id="chapter3">
+    <p class="chapter-kicker">Chapter 3</p>
+    <h1>SYSTEM DESIGN AND ARCHITECTURE</h1>
+    <h2>3.1 Functional Requirements</h2>
+    <ul>
+      <li>Select a supported crop and enter the seven field measurements.</li>
+      <li>Reject missing, non-numeric, or out-of-range numeric values.</li>
+      <li>Calculate a crop-specific health score, fertility indicator, and yield estimate.</li>
+      <li>Display recommendations and nutrient status from the provided inputs.</li>
+      <li>Save reports locally, display recent history, delete a report, clear history, and export CSV.</li>
+      <li>Render usefully across smartphone, tablet, and desktop viewport sizes.</li>
+    </ul>
+    <h2>3.2 Architecture Overview</h2>
+    <figure>
+      <svg class="architecture" viewBox="0 0 900 360" role="img" aria-labelledby="diagram-title diagram-desc">
+        <title id="diagram-title">Fasal deployment architecture</title>
+        <desc id="diagram-desc">A user accesses the public static site through GitHub Pages. Browser JavaScript calculates estimates and saves report history locally. A separate optional Flask backend uses NumPy and SQLite when run on a server.</desc>
+        <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#397451"/></marker></defs>
+        <rect x="24" y="70" width="175" height="82" rx="13" fill="#edf5eb" stroke="#6b9e72" stroke-width="2"/>
+        <text x="111" y="103" text-anchor="middle" font-family="Arial" font-size="17" fill="#173429">User device</text>
+        <text x="111" y="128" text-anchor="middle" font-family="Arial" font-size="13" fill="#52645a">Phone / tablet / PC</text>
+        <rect x="267" y="70" width="205" height="82" rx="13" fill="#e3f0e4" stroke="#6b9e72" stroke-width="2"/>
+        <text x="369" y="103" text-anchor="middle" font-family="Arial" font-size="17" fill="#173429">GitHub Pages</text>
+        <text x="369" y="128" text-anchor="middle" font-family="Arial" font-size="13" fill="#52645a">index + CSS + JavaScript</text>
+        <rect x="548" y="37" width="320" height="105" rx="13" fill="#f4f7f1" stroke="#6b9e72" stroke-width="2"/>
+        <text x="708" y="72" text-anchor="middle" font-family="Arial" font-size="17" fill="#173429">Browser application</text>
+        <text x="708" y="97" text-anchor="middle" font-family="Arial" font-size="13" fill="#52645a">Validate · Estimate · History</text>
+        <text x="708" y="120" text-anchor="middle" font-family="Arial" font-size="13" fill="#52645a">localStorage · CSV export</text>
+        <line x1="199" y1="111" x2="260" y2="111" stroke="#397451" stroke-width="3" marker-end="url(#arrow)"/>
+        <line x1="472" y1="111" x2="541" y2="93" stroke="#397451" stroke-width="3" marker-end="url(#arrow)"/>
+        <rect x="267" y="229" width="205" height="83" rx="13" fill="#f5f1e8" stroke="#bd9959" stroke-width="2"/>
+        <text x="369" y="262" text-anchor="middle" font-family="Arial" font-size="17" fill="#173429">Optional Flask app</text>
+        <text x="369" y="287" text-anchor="middle" font-family="Arial" font-size="13" fill="#52645a">Local / separately hosted</text>
+        <rect x="548" y="229" width="320" height="83" rx="13" fill="#f7f3ec" stroke="#bd9959" stroke-width="2"/>
+        <text x="708" y="262" text-anchor="middle" font-family="Arial" font-size="17" fill="#173429">NumPy + SQLite</text>
+        <text x="708" y="287" text-anchor="middle" font-family="Arial" font-size="13" fill="#52645a">Server-side estimates + records</text>
+        <line x1="472" y1="270" x2="541" y2="270" stroke="#397451" stroke-width="3" marker-end="url(#arrow)"/>
+        <text x="450" y="194" text-anchor="middle" font-family="Arial" font-size="12" fill="#8a6840">Separate deployment path; Pages does not execute this backend</text>
+      </svg>
+      <figcaption>Figure 3.1: Published static architecture and optional server-backed development architecture.</figcaption>
+    </figure>
+    <h2>3.3 Data Model</h2>
+    <p>The static application stores a JSON array under a versioned local-storage key. Each report includes a unique identifier, creation time, field input values, and derived estimate. The optional Flask database stores one row per report in the <code>crop_records</code> SQLite table.</p>
+    <table>
+      <thead><tr><th>Field</th><th>Unit</th><th>Accepted range</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Crop</td><td>Category</td><td>Rice, wheat, maize, cotton, sugarcane</td><td>Selects target profile and base yield</td></tr>
+        <tr><td>Area</td><td>Acres</td><td>0.1–10,000</td><td>Scales per-acre yield to field total</td></tr>
+        <tr><td>Temperature</td><td>°C</td><td>0–60</td><td>Compared with crop profile target</td></tr>
+        <tr><td>Soil moisture</td><td>%</td><td>0–100</td><td>Compared with crop profile target</td></tr>
+        <tr><td>Soil pH</td><td>pH</td><td>0–14</td><td>Contributes to soil score and guidance</td></tr>
+        <tr><td>Organic matter</td><td>%</td><td>0–15</td><td>Contributes to soil score and fertility</td></tr>
+        <tr><td>Nitrogen</td><td>kg/ha</td><td>0–300</td><td>Compared with crop profile target</td></tr>
+        <tr><td>Phosphorus</td><td>kg/ha</td><td>0–150</td><td>Compared with crop profile target</td></tr>
+      </tbody>
+    </table>
+    <h2>3.4 Estimation Workflow</h2>
+    <ol>
+      <li>The form reads the selected crop and numeric inputs.</li>
+      <li>Browser-native required/minimum/maximum checks and JavaScript guards validate the values.</li>
+      <li>The crop profile supplies ideal temperature, moisture, nitrogen, phosphorus, and base yield.</li>
+      <li>Component scores are clamped from 0 to 100 and combined using fixed weights.</li>
+      <li>The interface displays a score, yield, fertility, nutrient statuses, and rule-based recommendation.</li>
+      <li>On submission, the input and estimate are stored as a local browser report and added to history.</li>
+    </ol>
+    <h2>3.5 Security and Privacy</h2>
+    <p>The Pages application does not require an account and sends report history to no application server; browser storage remains local to the browser origin. Users should avoid entering sensitive personal information and should export or back up data they need to keep. Clearing browser data or changing devices can remove access to the saved history. The separate Flask backend has no user authentication and is intended for local development unless security controls and a production database are added before deployment.</p>
+  </section>
+
+  <section class="chapter" id="chapter4">
+    <p class="chapter-kicker">Chapter 4</p>
+    <h1>IMPLEMENTATION</h1>
+    <h2>4.1 Technology Stack</h2>
+    <table>
+      <thead><tr><th>Component</th><th>Technology</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>Public interface</td><td>HTML5, CSS3</td><td>Responsive dashboard and field form</td></tr>
+        <tr><td>Public calculation</td><td>Browser JavaScript</td><td>Input validation, score/yield, recommendations, local history and CSV</td></tr>
+        <tr><td>Public hosting</td><td>GitHub Pages</td><td>Serves static files from the main branch root</td></tr>
+        <tr><td>Optional backend</td><td>Python, Flask</td><td>Routes, template rendering, request validation and local API</td></tr>
+        <tr><td>Backend calculations</td><td>NumPy</td><td>Clipping and weighted score calculations</td></tr>
+        <tr><td>Backend storage</td><td>SQLite</td><td>Persistent crop report table for the local Flask app</td></tr>
+      </tbody>
+    </table>
+    <h2>4.2 Front-End Implementation</h2>
+    <p>The root <code>index.html</code> is a standalone document so GitHub Pages can serve it without a build step or server-side template engine. The existing dashboard visual design is shared through <code>static/styles.css</code>. Responsive CSS rearranges the sidebar, cards, form, and history table at tablet and mobile widths. The calculator and history are semantic form/section structures with labels and status messages for usability.</p>
+    <h2>4.3 Crop Profiles and Health Score</h2>
+    <p>Each supported crop profile contains target values and an illustrative yield baseline. The six score components represent temperature, moisture, pH, organic matter, nitrogen, and phosphorus. For a target value, closeness is mapped into a bounded component score. Organic matter is scaled to a three-percent reference and capped. The weighted total is rounded to an integer from 0 to 100.</p>
+    <div class="equation">
+      S = round(0.18T + 0.17M + 0.18H + 0.14O + 0.18N + 0.15P)<br>
+      T = clamp(100 - 7 × |temperature - ideal temperature|, 0, 100)<br>
+      M = clamp(100 - 2.4 × |moisture - ideal moisture|, 0, 100)<br>
+      H = clamp(100 - 30 × |pH - 6.7|, 0, 100)<br>
+      O = clamp(organic matter / 3 × 100, 0, 100)<br>
+      N, P = clamp(100 - 80 × |measured - ideal| / ideal, 0, 100)
+    </div>
+    <p>The derived fertility indicator and yield use the following equations:</p>
+    <div class="equation">
+      Fertility = round(clamp(0.98 × S + 2 × organic matter, 0, 100))<br>
+      Yield per acre = round to 0.1 (base yield × (0.6 + S / 250))<br>
+      Total yield = round to 0.1 (yield per acre × area in acres)
+    </div>
+    <p>The app’s target profiles are configuration constants in the source; they are not verified recommendations. The reported total uses tonnes and the profile baseline is treated as tonnes per acre for display. Such simplified assumptions limit the scientific meaning of the output.</p>
+    <h2>4.4 Recommendations and History</h2>
+    <p>The recommendation logic checks moisture first, then nitrogen, phosphorus, and pH, and displays the first applicable general prompt. The history view presents the crop, local date, score, and yield. A report can be individually deleted; all history can be cleared after confirmation. The CSV export serialises saved reports for a spreadsheet tool. Storage exceptions are reported to the user rather than treated as successful saves.</p>
+    <h2>4.5 Optional Flask and SQLite Backend</h2>
+    <p>The repository retains <code>app.py</code>, <code>schema.sql</code>, and Jinja templates for local backend experimentation. Database initialization creates the SQLite report table and date index. The form route validates values and inserts them with parameterised SQL. <code>/api/records</code> returns saved records and estimates; <code>/api/estimate</code> validates and returns a non-persistent estimate. This backend is not invoked by the public GitHub Pages site.</p>
+    <h2>4.6 GitHub Pages Deployment</h2>
+    <p>The public website is hosted at <a href="https://aayushhhhh06.github.io/Cropwise-miniproject/">https://aayushhhhh06.github.io/Cropwise-miniproject/</a>. GitHub Pages is configured to deploy from the <code>main</code> branch at the repository root. It serves the root <code>index.html</code> together with <code>static/app.js</code> and <code>static/styles.css</code>. Changes merged to the publishing branch trigger a Pages build.</p>
+  </section>
+
+  <section class="chapter" id="chapter5">
+    <p class="chapter-kicker">Chapter 5</p>
+    <h1>TESTING AND VALIDATION</h1>
+    <h2>5.1 Objectives</h2>
+    <p>Testing checks that the public files can be served, the form is connected to its script, numeric validation protects the estimate flow, local history operations behave coherently, and the published site responds from GitHub Pages.</p>
+    <h2>5.2 Testing Strategy</h2>
+    <table>
+      <thead><tr><th>Test area</th><th>Verification</th><th>Result recorded</th></tr></thead>
+      <tbody>
+        <tr><td>Static document wiring</td><td>Check JavaScript element IDs against the root HTML and confirm referenced CSS/script files exist.</td><td>Passed during implementation.</td></tr>
+        <tr><td>Static HTTP smoke test</td><td>Serve the static project locally and request the home page, JavaScript, and CSS.</td><td>All three returned HTTP 200 with expected markers.</td></tr>
+        <tr><td>Public deployment</td><td>Request the published Pages home page and deployed assets; inspect the Pages build and source settings.</td><td>Build status “built”; home page and assets returned HTTP 200.</td></tr>
+        <tr><td>Estimate and validation</td><td>Inspect required fields, range checks, supported crop profile lookup, and estimate formulas.</td><td>Implemented in the public browser app; should also be exercised in target browsers.</td></tr>
+        <tr><td>Persistence and export</td><td>Save, reload, delete, clear, and export browser-local records.</td><td>Implemented; behaviour depends on browser storage permissions and should be confirmed on target devices.</td></tr>
+        <tr><td>Backend smoke checks</td><td>Exercise Flask dashboard, invalid submission, SQLite insert, records API, and estimate API.</td><td>Passed in an isolated-database smoke run during backend implementation.</td></tr>
+      </tbody>
+    </table>
+    <h2>5.3 Input Validation</h2>
+    <p>The interface combines HTML numeric attributes with JavaScript checks. The range boundaries are inclusive except farm area, whose minimum is 0.1 acre. Unsupported crops are rejected. Reports are not appended when browser storage cannot save the data; a visible message explains the failure.</p>
+    <h2>5.4 Deployment Validation</h2>
+    <p>The configured Pages source was verified as <code>main</code> and <code>/(root)</code>. The latest Pages build completed with status <code>built</code>. The deployed root page and the JavaScript and CSS assets returned successful HTTP responses and contained expected dashboard content.</p>
+    <h2>5.5 Limitations of Validation</h2>
+    <p>These checks establish basic wiring and deployment availability, not agronomic accuracy, accessibility conformance, cross-browser compatibility, load capacity, or field usability. No controlled crop trials or independent user-acceptance study are claimed. Such evidence would be required before making operational farming recommendations.</p>
+    <h2>5.6 Conclusion</h2>
+    <p>The performed smoke checks support that the public static site is deployed and its key assets are reachable. Functional acceptance across a wider range of browsers, screen readers, storage settings, and farm use cases remains future work.</p>
+  </section>
+
+  <section class="chapter" id="chapter6">
+    <p class="chapter-kicker">Chapter 6</p>
+    <h1>RESULTS, CONCLUSION, AND FUTURE SCOPE</h1>
+    <h2>6.1 Results</h2>
+    <p>The project delivers a public responsive dashboard with five crop profiles, a validated field-entry form, a crop-health estimate, yield and nutrient indicators, rule-based guidance, local report history, record deletion, clear-history control, and CSV export. The public static build is deployed at the GitHub Pages URL and verified to return the page and assets successfully.</p>
+    <p>A separate Flask/SQLite implementation is retained for local backend learning and provides persistent records and JSON estimate/history routes when run on a Python host. It is not the runtime behind the GitHub Pages URL. The browser and backend implementations have similar objectives but different storage locations and deployment requirements.</p>
+    <h2>6.2 Conclusion</h2>
+    <p>Fasal demonstrates an end-to-end crop reporting workflow using accessible web technologies. Hosting the front end on GitHub Pages provides a public URL without requiring users to install software. Browser-local storage keeps basic history without a server, while the report explains that this history is device-specific. The project fulfils its educational software objectives but does not establish the agronomic validity of its illustrative yield estimates.</p>
+    <h2>6.3 Future Scope</h2>
+    <ol>
+      <li>Evaluate the estimation model against trustworthy, local crop-yield datasets and seek review from qualified agronomists.</li>
+      <li>Introduce a secured, hosted backend and managed SQL database for authenticated cross-device synchronisation.</li>
+      <li>Add fields such as location, crop variety, season, sowing date, irrigation, and actual harvest to support meaningful comparisons.</li>
+      <li>Support import, backup, and restore workflows in addition to CSV export.</li>
+      <li>Improve language accessibility and conduct usability testing with intended users.</li>
+      <li>Complete formal accessibility, browser compatibility, privacy, and security reviews before wider operational use.</li>
+      <li>Integrate weather or sensor data only with reliable data sources, user consent, and clearly documented uncertainty.</li>
+    </ol>
+  </section>
+
+  <section class="chapter references" id="references">
+    <p class="chapter-kicker">Bibliography</p>
+    <h1>REFERENCES</h1>
+    <ol>
+      <li>GitHub Docs, “What is GitHub Pages?” <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages</a>. Accessed 27 September 2026.</li>
+      <li>Mozilla Developer Network, “Window: localStorage property.” <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage</a>. Accessed 27 September 2026.</li>
+      <li>Flask Documentation, “Flask Documentation.” <a href="https://flask.palletsprojects.com/">https://flask.palletsprojects.com/</a>. Accessed 27 September 2026.</li>
+      <li>NumPy Developers, “NumPy documentation.” <a href="https://numpy.org/doc/">https://numpy.org/doc/</a>. Accessed 27 September 2026.</li>
+      <li>SQLite Consortium, “SQLite Documentation.” <a href="https://www.sqlite.org/docs.html">https://www.sqlite.org/docs.html</a>. Accessed 27 September 2026.</li>
+      <li>Fasal project source code and deployment: <a href="https://github.com/aayushhhhh06/Cropwise-miniproject">https://github.com/aayushhhhh06/Cropwise-miniproject</a>; live site: <a href="https://aayushhhhh06.github.io/Cropwise-miniproject/">https://aayushhhhh06.github.io/Cropwise-miniproject/</a>. Accessed 27 September 2026.</li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="appendix">
+    <p class="chapter-kicker">Appendix</p>
+    <h1>RUNNING THE OPTIONAL FLASK BACKEND</h1>
+    <p>The public website is already hosted on GitHub Pages. The steps below run the optional Flask development implementation locally; they do not deploy it to a public server.</p>
+    <h2>A.1 Requirements</h2>
+    <ul><li>Python 3.10 or newer.</li><li>Flask and NumPy installed in the active Python environment.</li><li>A terminal with Bash, PowerShell, or equivalent commands.</li></ul>
+    <h2>A.2 Commands</h2>
+    <div class="equation" style="text-align:left">
+      python -m venv .venv<br>
+      # Linux/macOS Bash<br>
+      source .venv/bin/activate<br>
+      # Windows PowerShell: .venv\Scripts\Activate.ps1<br>
+      python -m pip install Flask numpy<br>
+      python app.py
+    </div>
+    <p>Open <code>http://127.0.0.1:5000</code>. The optional Flask app initializes an SQLite database at <code>data/fasal.db</code> by default. Deployment of that backend requires a Python-capable hosting platform and a separately managed database strategy.</p>
+    <p class="note"><strong>For submitting this report:</strong> Open this HTML file in a browser, choose Print, select “Save as PDF,” and use A4 paper. Fill in the bracketed cover/certificate details first. Add actual screenshots or institution-specific pages only if required by the project coordinator.</p>
+  </section>
+</body>
+</html>
